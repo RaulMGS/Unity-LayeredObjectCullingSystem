@@ -5,7 +5,7 @@ A simple Unity3D culling system that takes advantage of layered culling API avai
 
 The LayeredObjectCulling system takes advantage of API that was added in unity recently, but was not implemented into the engine as a standalone feature. It allows for culling objects and shadowcasting independently and based on renderlayers, regardless of the LOD System culling. 
 
-This technique is great for optimization of scenes have lots of detail objects that should not render and/or cast shadows until close enough to the camera. 
+This technique is great for optimization of scenes that have lots of detail objects that should not render and/or cast shadows until close enough to the camera. 
 
 # How to use
 
