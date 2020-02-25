@@ -89,12 +89,14 @@ public class LayeredObjectCulling : MonoBehaviour {
             return lightInstances;
         }
         set => lightInstances = value;
-    }
+    } 
+    private float LodBias { get; set; }
     #endregion
 
     #region methods
     private void OnEnable() {
-        StartCoroutine(CheckLodBias(QualitySettings.lodBias));
+        LodBias = QualitySettings.lodBias;
+        StartCoroutine(CheckLodBias());
     }
     /// <summary>
     /// Sets the culling values to all the registered instances
@@ -131,18 +133,16 @@ public class LayeredObjectCulling : MonoBehaviour {
     /// </summary>
     /// <param name="lastBias"></param>
     /// <returns></returns>
-    private IEnumerator CheckLodBias(float lastBias) {
-        // wait 1 second
-        yield return new WaitForSeconds(1);
+    private IEnumerator CheckLodBias() {
+        while (enabled) {
+            // wait 1 second
+            yield return new WaitForSeconds(1);
 
-        // check if bias has changed
-        if (MultiplierIsLodBias && lastBias != QualitySettings.lodBias) {
-            Refresh();
-        }
-
-        // rinse and repeat
-        if (enabled) {
-            StartCoroutine(CheckLodBias(QualitySettings.lodBias));
+            // check if bias has changed
+            if (MultiplierIsLodBias && LodBias != QualitySettings.lodBias) {
+                LodBias = QualitySettings.lodBias;
+                Refresh();
+            }
         }
     }
 
